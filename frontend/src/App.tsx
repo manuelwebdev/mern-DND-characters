@@ -6,15 +6,17 @@ import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <div className='App min-h-screen max-w-[1024px] mx-auto'>
-      <BrowserRouter>
-        <Navbar />
-        <div className='pages'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+    <div className='App min-h-screen min-w-full bg-slate-200'>
+      <div className='max-w-[1024px] mx-auto'>
+        <BrowserRouter>
+          <Navbar />
+          <div className='pages'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </div>
     </div>
   )
 }
