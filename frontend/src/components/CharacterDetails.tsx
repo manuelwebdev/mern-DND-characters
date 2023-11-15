@@ -7,23 +7,24 @@ type Props = {
 export default function CharacterDetails(props: Props) {
   const {
     character: {
-      _id,
       name,
       class: characterClass,
       level = 0,
       race = 'unknown',
       background = null,
       alignment = null,
+      createdAt = new Date(),
     },
   } = props
   return (
-    <div className='characterDetails'>
-      <h2>Name: {name}</h2>
+    <div className='w-full p-2 shadow-sm rounded bg-slate-100'>
+      <h2 className='text-xl text-emerald-600'>{name}</h2>
       <p>Class: {characterClass}</p>
       <p>Level: {level}</p>
       <p>Race: {race}</p>
       <p>Background: {background}</p>
       <p>Alignment: {alignment}</p>
+      <p>Created at: {new Date(createdAt).toDateString()}</p>
     </div>
   )
 }

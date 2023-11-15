@@ -23,8 +23,9 @@ export default function Home({}: Props) {
 
   return (
     <div className='home'>
-      <div className='characters'>
-        {characters?.map((character: any, id) => (
+      <h2 className='text-bold text-2xl leading-[3rem]'>Characters</h2>
+      <div className='characters grid grid-cols-3 gap-2'>
+        {characters?.map((character: any) => (
           <CharacterDetails key={character?._id} character={character} />
         ))}
       </div>
