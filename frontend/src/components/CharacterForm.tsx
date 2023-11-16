@@ -10,21 +10,7 @@ interface Character {
   createdAt: Date
 }
 
-interface PromiseFulfilledResult<T> {
-  status: 'fulfilled'
-  value: T
-}
-
-interface PromiseRejectedResult {
-  status: 'rejected'
-  reason: any
-}
-
-type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult
-
-type Props = {}
-
-export default function CharacterForm({}: Props) {
+export default function CharacterForm() {
   const [character, setCharacter] = useState<Character>({
     name: '',
     class: '',
@@ -49,21 +35,18 @@ export default function CharacterForm({}: Props) {
 
       if (classes?.status === 'fulfilled') {
         const { value } = classes
-        console.log(value)
         const { results } = await value.json()
         const cOptions = results?.map((c: any) => c?.name)
         setClassOptions(cOptions)
       }
       if (races?.status === 'fulfilled') {
         const { value } = races
-        console.log(value)
         const { results } = await value.json()
         const rOptions = results?.map((r: any) => r?.name)
         setRaceOptions(rOptions)
       }
       if (backgrounds?.status === 'fulfilled') {
         const { value } = backgrounds
-        console.log(value)
         const { results } = await value.json()
         const bOptions = results?.map((b: any) => b?.name)
         setBackgroundOptions(bOptions)
@@ -89,7 +72,7 @@ export default function CharacterForm({}: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault()
-
+      console.log(character)
       const res = await fetch('http://localhost:3000/api/characters/', {
         method: 'POST',
         body: JSON.stringify(character),
@@ -97,10 +80,10 @@ export default function CharacterForm({}: Props) {
           'Content-Type': 'application/json',
         },
       })
+      console.log(res)
       if (!res.ok) {
-        const err = await res.json()
-        setError(JSON.parse(err)?.error)
-        return
+        const err = await res.text()
+        setError(err)
       }
       if (res.ok) {
         const data = await res.json()
@@ -118,6 +101,7 @@ export default function CharacterForm({}: Props) {
       }
     } catch (error) {
       console.warn(error)
+      setError(error)
     } finally {
       console.log('done')
     }
@@ -133,6 +117,7 @@ export default function CharacterForm({}: Props) {
         onChange={(e) => {
           setCharacter((prevState) => ({ ...prevState, name: e.target.value }))
         }}
+        required
       />
       <label htmlFor='class'>Class</label>
       <select
@@ -140,7 +125,18 @@ export default function CharacterForm({}: Props) {
         className='h-8'
         id='classes'
         disabled={!!!classOptions?.length}
+        required
+        onChange={(e) => {
+          setCharacter((prevState) => ({
+            ...prevState,
+            class: e.target.value,
+          }))
+        }}
+        defaultValue={''}
       >
+        <option value='' selected disabled hidden>
+          Select a class
+        </option>
         {classOptions?.map((c: string) => (
           <option key={c} value={c}>
             {c}
@@ -172,7 +168,17 @@ export default function CharacterForm({}: Props) {
         className='h-8'
         id='race'
         disabled={!!!raceOptions?.length}
+        onChange={(e) => {
+          setCharacter((prevState) => ({
+            ...prevState,
+            race: e.target.value,
+          }))
+        }}
+        defaultValue={''}
       >
+        <option value='' selected disabled hidden>
+          Select a race
+        </option>
         {raceOptions?.map((r: string) => (
           <option key={r} value={r}>
             {r}
@@ -185,7 +191,17 @@ export default function CharacterForm({}: Props) {
         className='h-8'
         id='background'
         disabled={!!!backgroundOptions?.length}
+        onChange={(e) => {
+          setCharacter((prevState) => ({
+            ...prevState,
+            background: e.target.value,
+          }))
+        }}
+        defaultValue={''}
       >
+        <option value='' selected disabled hidden>
+          Select a background
+        </option>
         {backgroundOptions?.map((b: string) => (
           <option key={b} value={b}>
             {b}
@@ -193,7 +209,21 @@ export default function CharacterForm({}: Props) {
         ))}
       </select>
       <label htmlFor='alignment'>Alignment</label>
-      <select name='alignment' className='h-8' id='alignment'>
+      <select
+        name='alignment'
+        className='h-8'
+        id='alignment'
+        onChange={(e) => {
+          setCharacter((prevState) => ({
+            ...prevState,
+            alignment: e.target.value,
+          }))
+        }}
+        defaultValue={''}
+      >
+        <option value='' selected disabled hidden>
+          Select an alignment
+        </option>
         <option value='lawful-good'>lawful-good</option>
         <option value='neutral-good'>neutral-good</option>
         <option value='chaotic-good'>chaotic-good</option>
@@ -207,6 +237,7 @@ export default function CharacterForm({}: Props) {
       <button type='submit' className='bg-emerald-600 text-white w-1/3 py-1'>
         Submit
       </button>
+      {console.log(error)}
       {error && <p>{error}</p>}
     </form>
   )
