@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        repeater: 'repeat(auto-fit, minmax(200px, 1fr))',
+      },
+    },
     fontFamily: {
       sans: ['Poppins', 'sans-serif'],
     },
