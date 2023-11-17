@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useCharactersContext } from '../hooks/useCharacterContext'
 
 interface Character {
   name: string
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export default function CharacterForm({ title }: Props) {
+  const { dispatch } = useCharactersContext()
   const [character, setCharacter] = useState<Character>({
     name: '',
     class: '',
@@ -91,7 +93,7 @@ export default function CharacterForm({ title }: Props) {
       }
       if (res.ok) {
         const data = await res.json()
-        console.log(data)
+        console.log({ data })
         setCharacter({
           name: '',
           class: '',
@@ -102,6 +104,10 @@ export default function CharacterForm({ title }: Props) {
           createdAt: new Date(),
         })
         setError(null)
+        dispatch({
+          type: 'CREATE_CHARACTER',
+          payload: data,
+        })
       }
     } catch (error) {
       console.warn(error)
