@@ -15,7 +15,7 @@ export default function CharacterDetails(props: Props) {
     },
   } = props
   return (
-    <div className='w-full p-2 shadow-sm rounded bg-slate-100'>
+    <div className='w-full p-2 shadow-sm rounded bg-slate-100 min-w-fit'>
       <h2 className='text-xl text-emerald-600'>{name}</h2>
       <p>Class: {characterClass}</p>
       <p>Level: {level}</p>

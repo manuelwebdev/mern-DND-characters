@@ -10,7 +10,11 @@ interface Character {
   createdAt: Date
 }
 
-export default function CharacterForm() {
+type Props = {
+  title: string
+}
+
+export default function CharacterForm({ title }: Props) {
   const [character, setCharacter] = useState<Character>({
     name: '',
     class: '',
@@ -107,138 +111,144 @@ export default function CharacterForm() {
     }
   }
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
-      <label htmlFor='name'>Name</label>
-      <input
-        className=''
-        type='text'
-        value={character?.name}
-        name='name'
-        onChange={(e) => {
-          setCharacter((prevState) => ({ ...prevState, name: e.target.value }))
-        }}
-        required
-      />
-      <label htmlFor='class'>Class</label>
-      <select
-        name='class'
-        className='h-8'
-        id='classes'
-        disabled={!!!classOptions?.length}
-        required
-        onChange={(e) => {
-          setCharacter((prevState) => ({
-            ...prevState,
-            class: e.target.value,
-          }))
-        }}
-        value={character?.class}
-      >
-        <option value='' disabled hidden>
-          Select a class
-        </option>
-        {classOptions?.map((c: string) => (
-          <option key={c} value={c}>
-            {c}
+    <div className='characterForm'>
+      <h2 className='text-bold text-2xl leading-[3rem]'>{title}</h2>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+        <label htmlFor='name'>Name</label>
+        <input
+          className=''
+          type='text'
+          value={character?.name}
+          name='name'
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              name: e.target.value,
+            }))
+          }}
+          required
+        />
+        <label htmlFor='class'>Class</label>
+        <select
+          name='class'
+          className='h-8'
+          id='classes'
+          disabled={!!!classOptions?.length}
+          required
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              class: e.target.value,
+            }))
+          }}
+          value={character?.class}
+        >
+          <option value='' disabled hidden>
+            Select a class
           </option>
-        ))}
-      </select>
-      <label htmlFor='level'>
-        Level{' '}
-        <span className='text-sm text-emerald-600'>{character?.level}</span>
-      </label>
-      <input
-        className='range pr-6 accent-emerald-600 mx-2'
-        type='range'
-        min={0}
-        max={20}
-        step={1}
-        value={character?.level}
-        name='level'
-        onChange={(e) => {
-          setCharacter((prevState) => ({
-            ...prevState,
-            level: +e.target.value,
-          }))
-        }}
-      />
-      <label htmlFor='race'>Race</label>
-      <select
-        name='race'
-        className='h-8'
-        id='race'
-        disabled={!!!raceOptions?.length}
-        onChange={(e) => {
-          setCharacter((prevState) => ({
-            ...prevState,
-            race: e.target.value,
-          }))
-        }}
-        value={character?.race}
-      >
-        <option value='' disabled hidden>
-          Select a race
-        </option>
-        {raceOptions?.map((r: string) => (
-          <option key={r} value={r}>
-            {r}
+          {classOptions?.map((c: string) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+        <label htmlFor='level'>
+          Level{' '}
+          <span className='text-sm text-emerald-600'>{character?.level}</span>
+        </label>
+        <input
+          className='range pr-6 accent-emerald-600 mx-2'
+          type='range'
+          min={0}
+          max={20}
+          step={1}
+          value={character?.level}
+          name='level'
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              level: +e.target.value,
+            }))
+          }}
+        />
+        <label htmlFor='race'>Race</label>
+        <select
+          name='race'
+          className='h-8'
+          id='race'
+          disabled={!!!raceOptions?.length}
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              race: e.target.value,
+            }))
+          }}
+          value={character?.race}
+        >
+          <option value='' disabled hidden>
+            Select a race
           </option>
-        ))}
-      </select>
-      <label htmlFor='background'>Background</label>
-      <select
-        name='background'
-        className='h-8'
-        id='background'
-        disabled={!!!backgroundOptions?.length}
-        onChange={(e) => {
-          setCharacter((prevState) => ({
-            ...prevState,
-            background: e.target.value,
-          }))
-        }}
-        value={character?.background}
-      >
-        <option value='' disabled hidden>
-          Select a background
-        </option>
-        {backgroundOptions?.map((b: string) => (
-          <option key={b} value={b}>
-            {b}
+          {raceOptions?.map((r: string) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
+        <label htmlFor='background'>Background</label>
+        <select
+          name='background'
+          className='h-8'
+          id='background'
+          disabled={!!!backgroundOptions?.length}
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              background: e.target.value,
+            }))
+          }}
+          value={character?.background}
+        >
+          <option value='' disabled hidden>
+            Select a background
           </option>
-        ))}
-      </select>
-      <label htmlFor='alignment'>Alignment</label>
-      <select
-        name='alignment'
-        className='h-8'
-        id='alignment'
-        onChange={(e) => {
-          setCharacter((prevState) => ({
-            ...prevState,
-            alignment: e.target.value,
-          }))
-        }}
-        value={character?.alignment}
-      >
-        <option value='' disabled hidden>
-          Select an alignment
-        </option>
-        <option value='lawful-good'>lawful-good</option>
-        <option value='neutral-good'>neutral-good</option>
-        <option value='chaotic-good'>chaotic-good</option>
-        <option value='lawful-neutral'>lawful-neutral</option>
-        <option value='neutral'>neutral</option>
-        <option value='chaotic-neutral'>chaotic-neutral</option>
-        <option value='lawful-evil'>lawful-evil</option>
-        <option value='neutral-evil'>neutral-evil</option>
-        <option value='chaotic-evil'>chaotic-evil</option>
-        <option value='unknown'>unknown</option>
-      </select>
-      <button type='submit' className='bg-emerald-600 text-white w-1/3 py-1'>
-        Submit
-      </button>
-      {error && <p>{error}</p>}
-    </form>
+          {backgroundOptions?.map((b: string) => (
+            <option key={b} value={b}>
+              {b}
+            </option>
+          ))}
+        </select>
+        <label htmlFor='alignment'>Alignment</label>
+        <select
+          name='alignment'
+          className='h-8'
+          id='alignment'
+          onChange={(e) => {
+            setCharacter((prevState) => ({
+              ...prevState,
+              alignment: e.target.value,
+            }))
+          }}
+          value={character?.alignment}
+        >
+          <option value='' disabled hidden>
+            Select an alignment
+          </option>
+          <option value='lawful-good'>lawful-good</option>
+          <option value='neutral-good'>neutral-good</option>
+          <option value='chaotic-good'>chaotic-good</option>
+          <option value='lawful-neutral'>lawful-neutral</option>
+          <option value='neutral'>neutral</option>
+          <option value='chaotic-neutral'>chaotic-neutral</option>
+          <option value='lawful-evil'>lawful-evil</option>
+          <option value='neutral-evil'>neutral-evil</option>
+          <option value='chaotic-evil'>chaotic-evil</option>
+          <option value='unknown'>unknown</option>
+        </select>
+        <button type='submit' className='bg-emerald-600 text-white w-1/3 py-1'>
+          Submit
+        </button>
+        {error && <p>{error}</p>}
+      </form>
+    </div>
   )
 }
