@@ -132,9 +132,9 @@ export default function CharacterForm() {
             class: e.target.value,
           }))
         }}
-        defaultValue={''}
+        value={character?.class}
       >
-        <option value='' selected disabled hidden>
+        <option value='' disabled hidden>
           Select a class
         </option>
         {classOptions?.map((c: string) => (
@@ -148,7 +148,7 @@ export default function CharacterForm() {
         <span className='text-sm text-emerald-600'>{character?.level}</span>
       </label>
       <input
-        className=''
+        className='range pr-6 accent-emerald-600 mx-2'
         type='range'
         min={0}
         max={20}
@@ -174,9 +174,9 @@ export default function CharacterForm() {
             race: e.target.value,
           }))
         }}
-        defaultValue={''}
+        value={character?.race}
       >
-        <option value='' selected disabled hidden>
+        <option value='' disabled hidden>
           Select a race
         </option>
         {raceOptions?.map((r: string) => (
@@ -197,9 +197,9 @@ export default function CharacterForm() {
             background: e.target.value,
           }))
         }}
-        defaultValue={''}
+        value={character?.background}
       >
-        <option value='' selected disabled hidden>
+        <option value='' disabled hidden>
           Select a background
         </option>
         {backgroundOptions?.map((b: string) => (
@@ -219,9 +219,9 @@ export default function CharacterForm() {
             alignment: e.target.value,
           }))
         }}
-        defaultValue={''}
+        value={character?.alignment}
       >
-        <option value='' selected disabled hidden>
+        <option value='' disabled hidden>
           Select an alignment
         </option>
         <option value='lawful-good'>lawful-good</option>
@@ -233,11 +233,11 @@ export default function CharacterForm() {
         <option value='lawful-evil'>lawful-evil</option>
         <option value='neutral-evil'>neutral-evil</option>
         <option value='chaotic-evil'>chaotic-evil</option>
+        <option value='unknown'>unknown</option>
       </select>
       <button type='submit' className='bg-emerald-600 text-white w-1/3 py-1'>
         Submit
       </button>
-      {console.log(error)}
       {error && <p>{error}</p>}
     </form>
   )
