@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <header className='py-4'>
       <div className='container mx-auto'>
-        <Link to={'/'} className=' font-bold text-xl'>
-          My Website
+        <Link to={'/'}>
+          <h1 className='font-bold text-2xl'>D&D Character Tracker</h1>
         </Link>
       </div>
     </header>

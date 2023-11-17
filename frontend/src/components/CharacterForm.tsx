@@ -112,13 +112,14 @@ export default function CharacterForm({ title }: Props) {
   }
   return (
     <div className='characterForm'>
-      <h2 className='text-bold text-2xl leading-[3rem]'>{title}</h2>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+      <h2 className='mb-4 text-bold text-2xl leading-[2rem]'>{title}</h2>
+      <form onSubmit={handleSubmit} className='flex flex-col'>
         <label htmlFor='name'>Name</label>
         <input
-          className=''
+          className='h-8 px-1 mb-3'
           type='text'
           value={character?.name}
+          placeholder='Enter name'
           name='name'
           onChange={(e) => {
             setCharacter((prevState) => ({
@@ -131,7 +132,7 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='class'>Class</label>
         <select
           name='class'
-          className='h-8'
+          className='h-8 mb-3'
           id='classes'
           disabled={!!!classOptions?.length}
           required
@@ -157,7 +158,7 @@ export default function CharacterForm({ title }: Props) {
           <span className='text-sm text-emerald-600'>{character?.level}</span>
         </label>
         <input
-          className='range pr-6 accent-emerald-600 mx-2'
+          className='range pr-6 accent-emerald-600 mx-2 mb-3'
           type='range'
           min={0}
           max={20}
@@ -174,7 +175,7 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='race'>Race</label>
         <select
           name='race'
-          className='h-8'
+          className='h-8 mb-3'
           id='race'
           disabled={!!!raceOptions?.length}
           onChange={(e) => {
@@ -197,7 +198,7 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='background'>Background</label>
         <select
           name='background'
-          className='h-8'
+          className='h-8 mb-3'
           id='background'
           disabled={!!!backgroundOptions?.length}
           onChange={(e) => {
@@ -220,7 +221,7 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='alignment'>Alignment</label>
         <select
           name='alignment'
-          className='h-8'
+          className='h-8 mb-3'
           id='alignment'
           onChange={(e) => {
             setCharacter((prevState) => ({
@@ -244,10 +245,32 @@ export default function CharacterForm({ title }: Props) {
           <option value='chaotic-evil'>chaotic-evil</option>
           <option value='unknown'>unknown</option>
         </select>
-        <button type='submit' className='bg-emerald-600 text-white w-1/3 py-1'>
-          Submit
+        <button
+          type='submit'
+          className='
+          bg-emerald-600 
+          text-white 
+          w-[fit-content] 
+          px-4
+          py-1 
+          rounded-md
+
+          transition 
+          ease-in-out 
+          duration-300 
+          hover:bg-emerald-800 
+          hover:shadow-lg
+          hover:transition 
+          hover:ease-in 
+          hover:duration-100'
+        >
+          Add Character
         </button>
-        {error && <p>{error}</p>}
+        {error && (
+          <p className='text-red-600 p-3 border-2 border-solid border-red-500 bg-red-50 rounded-md'>
+            {error}
+          </p>
+        )}
       </form>
     </div>
   )
