@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 type Character = {
@@ -14,6 +14,7 @@ type Character = {
 export default function CharacterView() {
   const [character, setCharacter] = useState<Character | null>(null)
   const { id } = useParams<{ id: string }>()
+  console.log(id)
 
   useEffect(() => {
     const fetchCharacter = async () => {
@@ -43,7 +44,7 @@ export default function CharacterView() {
       <p>Race: {character.race}</p>
       <p>Background: {character.background}</p>
       <p>Alignment: {character.alignment}</p>
-      <p>Created At: {character.createdAt.toISOString()}</p>
+      <p>Created At: {new Date(character.createdAt).toLocaleString()}</p>
     </div>
   )
 }

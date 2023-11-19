@@ -38,7 +38,7 @@ export default function CharacterDetails(props: Props) {
   }
   return (
     <Link
-      to={`/characters/${id}`}
+      to={`/character/${id}`}
       className='
         w-full 
         h-full
