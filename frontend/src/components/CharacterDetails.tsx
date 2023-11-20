@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useCharactersContext } from '../hooks/useCharacterContext'
 
 type Props = {
   character: any
@@ -17,8 +18,7 @@ export default function CharacterDetails(props: Props) {
       createdAt = new Date(),
     },
   } = props
-
-  const handleActions = (e: any) => {}
+  const { dispatch } = useCharactersContext()
 
   const handleDelete = async (e: any) => {
     e.preventDefault()
@@ -29,16 +29,17 @@ export default function CharacterDetails(props: Props) {
           'Content-Type': 'application/json',
         },
       })
+      const data = await res.json()
       if (res.ok) {
-        console.log('deleted')
+        console.log('deleted', data)
+        dispatch({ type: 'DELETE_CHARACTER', payload: data })
       }
     } catch (error) {
       console.warn(error)
     }
   }
   return (
-    <Link
-      to={`/character/${id}`}
+    <div
       className='
         w-full 
         h-full
@@ -64,10 +65,30 @@ export default function CharacterDetails(props: Props) {
         <p className='text-slate-500 text-sm col-span-3 self-end justify-self-end'>
           Created at: {new Date(createdAt).toDateString()}
         </p>
+        <Link to={`/character/${id}`}>View</Link>
       </div>
-      <button className='container col-span-1' onClick={handleActions}>
-        ...
+      <button
+        className='container col-span-1 bg-slate-500 h-[fit-content] rounded p-2'
+        onClick={handleDelete}
+      >
+        <svg
+          width='28'
+          height='32'
+          viewBox='0 0 28 32'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M3 8V27C3 29.2091 4.79086 31 7 31H21C23.2091 31 25 29.2091 25 27V8'
+            stroke='black'
+            stroke-linecap='round'
+          />
+          <rect x='0.5' y='2.5' width='27' height='4' rx='2' stroke='black' />
+          <path d='M18 1L10 0.999999' stroke='black' stroke-linecap='round' />
+          <path d='M11 9V27' stroke='black' stroke-linecap='round' />
+          <path d='M18 9V27' stroke='black' stroke-linecap='round' />
+        </svg>
       </button>
-    </Link>
+    </div>
   )
 }
