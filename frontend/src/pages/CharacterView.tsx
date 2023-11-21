@@ -14,7 +14,6 @@ type Character = {
 export default function CharacterView() {
   const [character, setCharacter] = useState<Character | null>(null)
   const { id } = useParams<{ id: string }>()
-  console.log(id)
 
   useEffect(() => {
     const fetchCharacter = async () => {

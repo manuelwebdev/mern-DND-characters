@@ -26,7 +26,7 @@ export const charactersReducer = (state: any, action: any) => {
 
 export const CharactersContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(charactersReducer, {
-    characters: null,
+    characters: [],
   })
 
   return (

@@ -30,6 +30,7 @@ export default function CharacterForm({ title }: Props) {
   const [classOptions, setClassOptions] = useState([])
   const [raceOptions, setRaceOptions] = useState([])
   const [backgroundOptions, setBackgroundOptions] = useState([])
+  const [emptyFields, setEmptyFields] = useState<string[]>([])
 
   useEffect(() => {
     ;(async () => {
@@ -78,7 +79,6 @@ export default function CharacterForm({ title }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault()
-      console.log(character)
       const res = await fetch('http://localhost:3000/api/characters/', {
         method: 'POST',
         body: JSON.stringify(character),
@@ -86,14 +86,14 @@ export default function CharacterForm({ title }: Props) {
           'Content-Type': 'application/json',
         },
       })
-      console.log(res)
       if (!res.ok) {
-        const err = await res.text()
+        const err = await res.json()
+        console.log(err)
         setError(err)
+        setEmptyFields(err?.emptyFields)
       }
       if (res.ok) {
         const data = await res.json()
-        console.log({ data })
         setCharacter({
           name: '',
           class: '',
@@ -112,17 +112,22 @@ export default function CharacterForm({ title }: Props) {
     } catch (error) {
       console.warn(error)
       setError(error)
-    } finally {
-      console.log('done')
     }
   }
   return (
-    <div className='characterForm'>
+    <div className='w-full flex flex-col max-w-[calc(400px-2rem)]'>
       <h2 className='mb-4 text-bold text-2xl leading-[2rem]'>{title}</h2>
       <form onSubmit={handleSubmit} className='flex flex-col'>
-        <label htmlFor='name'>Name</label>
+        <label htmlFor='name'>
+          Name
+          <span className='text-red-500'>
+            * {emptyFields.includes('name') && 'name is required'}
+          </span>
+        </label>
         <input
-          className='h-8 px-1 mb-3'
+          className={
+            emptyFields?.includes('name') ? 'border-red-500 border-2' : ''
+          }
           type='text'
           value={character?.name}
           placeholder='Enter name'
@@ -133,15 +138,22 @@ export default function CharacterForm({ title }: Props) {
               name: e.target.value,
             }))
           }}
-          required
+          // required
         />
-        <label htmlFor='class'>Class</label>
+        <label htmlFor='class'>
+          Class
+          <span className='text-red-500'>
+            * {emptyFields.includes('class') && 'class is required'}
+          </span>
+        </label>
         <select
           name='class'
-          className='h-8 mb-3'
+          className={
+            emptyFields?.includes('name') ? 'border-red-500 border-2' : ''
+          }
           id='classes'
           disabled={!!!classOptions?.length}
-          required
+          // required
           onChange={(e) => {
             setCharacter((prevState) => ({
               ...prevState,
@@ -164,7 +176,7 @@ export default function CharacterForm({ title }: Props) {
           <span className='text-sm text-emerald-600'>{character?.level}</span>
         </label>
         <input
-          className='range pr-6 accent-emerald-600 mx-2 mb-3'
+          // className='range pr-6 accent-emerald-600 mx-2 mb-3'
           type='range'
           min={0}
           max={20}
@@ -181,8 +193,6 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='race'>Race</label>
         <select
           name='race'
-          className='h-8 mb-3'
-          id='race'
           disabled={!!!raceOptions?.length}
           onChange={(e) => {
             setCharacter((prevState) => ({
@@ -204,7 +214,6 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='background'>Background</label>
         <select
           name='background'
-          className='h-8 mb-3'
           id='background'
           disabled={!!!backgroundOptions?.length}
           onChange={(e) => {
@@ -227,8 +236,6 @@ export default function CharacterForm({ title }: Props) {
         <label htmlFor='alignment'>Alignment</label>
         <select
           name='alignment'
-          className='h-8 mb-3'
-          id='alignment'
           onChange={(e) => {
             setCharacter((prevState) => ({
               ...prevState,
@@ -272,9 +279,14 @@ export default function CharacterForm({ title }: Props) {
         >
           Add Character
         </button>
-        {error && (
-          <p className='text-red-600 p-3 border-2 border-solid border-red-500 bg-red-50 rounded-md'>
-            {error}
+        {!!emptyFields.length && (
+          <p className='break-words' style={{ wordWrap: 'break-word' }}>
+            The following fields are required:
+            {emptyFields.map((field) => (
+              <p key={field} className='text-red-500'>
+                {field}
+              </p>
+            ))}
           </p>
         )}
       </form>

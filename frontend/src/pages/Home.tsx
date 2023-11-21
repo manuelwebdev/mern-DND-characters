@@ -9,8 +9,6 @@ export default function Home({}: Props) {
   // const [characters, setCharacters] = useState<null | unknown[]>(null)
   const { characters, dispatch } = useCharactersContext()
 
-  console.log({ characters })
-
   useEffect(() => {
     ;(async () => {
       try {
@@ -20,10 +18,8 @@ export default function Home({}: Props) {
             'Content-Type': 'application/json',
           },
         })
-        console.log(res.ok)
         if (res.ok) {
           const data = await res.json()
-          console.log({ data })
           // setCharacters(data)
           dispatch({ type: 'SET_CHARACTER', payload: data })
         }
@@ -36,9 +32,8 @@ export default function Home({}: Props) {
   return (
     <div className='home'>
       <h2 className='text-bold text-2xl leading-[3rem]'>Characters</h2>
-      <div className='grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-6'>
-        <div className='characters grid grid-cols-repeater gap-2'>
-          {console.log(characters)}
+      <div className='grid grid-cols-repeater md:grid-cols-[3fr_minmax(min-content,400px)] gap-4'>
+        <div className='grid grid-cols-repeater gap-2'>
           {characters?.map((character: any) => (
             <CharacterDetails key={character?._id} character={character} />
           ))}

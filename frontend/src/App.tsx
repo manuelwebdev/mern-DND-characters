@@ -13,8 +13,6 @@ function App() {
           <div className='pages'>
             <Routes>
               <Route path='/' element={<Home />} />
-            </Routes>
-            <Routes>
               <Route path='/character/:id' element={<CharacterView />} />
             </Routes>
           </div>
