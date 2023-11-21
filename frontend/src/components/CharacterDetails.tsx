@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useCharactersContext } from '../hooks/useCharacterContext'
-import { UilTrash, UilTrashAlt } from '@iconscout/react-unicons'
+import { UilTrash } from '@iconscout/react-unicons'
 
 type Props = {
   character: any
@@ -86,13 +86,12 @@ export default function CharacterDetails(props: Props) {
           h-[fit-content] 
           w-[fit-content] 
           rounded 
-          p-2 
+          p-1
           text-white
           duration-300
           hover:bg-slate-600
           hover:transition-all
-          hover:duration-300
-          '
+          hover:duration-300'
         onClick={handleDelete}
       >
         Delete

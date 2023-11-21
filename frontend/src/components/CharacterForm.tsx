@@ -114,20 +114,33 @@ export default function CharacterForm({ title }: Props) {
       setError(error)
     }
   }
+
+  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setEmptyFields()
+  }
+
+  const inputStyle = 'w-full h-[2.5rem] rounded p-2 mb-2'
+
   return (
     <div className='w-full flex flex-col max-w-[calc(400px-2rem)]'>
       <h2 className='mb-4 text-bold text-2xl leading-[2rem]'>{title}</h2>
       <form onSubmit={handleSubmit} className='flex flex-col'>
+        {!!emptyFields.length && (
+          <p
+            className='text-red-500 border-red-500 border-2 bg-red-200 p-2 mb-2 rounded'
+            style={{ wordWrap: 'break-word' }}
+          >
+            Please fill out the required fields.
+          </p>
+        )}
         <label htmlFor='name'>
           Name
-          <span className='text-red-500'>
-            * {emptyFields.includes('name') && 'name is required'}
-          </span>
+          <span className='text-red-500'>*</span>
         </label>
         <input
-          className={
-            emptyFields?.includes('name') ? 'border-red-500 border-2' : ''
-          }
+          className={`${inputStyle} ${
+            emptyFields?.includes('name') && 'border-red-500 border-2'
+          }`}
           type='text'
           value={character?.name}
           placeholder='Enter name'
@@ -142,15 +155,13 @@ export default function CharacterForm({ title }: Props) {
         />
         <label htmlFor='class'>
           Class
-          <span className='text-red-500'>
-            * {emptyFields.includes('class') && 'class is required'}
-          </span>
+          <span className='text-red-500'>*</span>
         </label>
         <select
           name='class'
-          className={
-            emptyFields?.includes('name') ? 'border-red-500 border-2' : ''
-          }
+          className={`${inputStyle} ${
+            emptyFields?.includes('name') && 'border-red-500 border-2'
+          }`}
           id='classes'
           disabled={!!!classOptions?.length}
           // required
@@ -173,10 +184,17 @@ export default function CharacterForm({ title }: Props) {
         </select>
         <label htmlFor='level'>
           Level{' '}
-          <span className='text-sm text-emerald-600'>{character?.level}</span>
+          <span className='text-sm text-emerald-600'>
+            {character?.level === 0 ? 'unkown/npc' : character?.level}
+          </span>
+          <span className='text-red-500'>*</span>
         </label>
         <input
-          // className='range pr-6 accent-emerald-600 mx-2 mb-3'
+          className={`range pr-6 accent-emerald-600 mx-2 mb-3 ${
+            emptyFields?.includes('level')
+              ? 'accent-red-500 border-2'
+              : 'accent-emerald-600'
+          }`}
           type='range'
           min={0}
           max={20}
@@ -190,7 +208,10 @@ export default function CharacterForm({ title }: Props) {
             }))
           }}
         />
-        <label htmlFor='race'>Race</label>
+        <label htmlFor='race'>
+          Race
+          <span className='text-red-500'>*</span>
+        </label>
         <select
           name='race'
           disabled={!!!raceOptions?.length}
@@ -201,6 +222,9 @@ export default function CharacterForm({ title }: Props) {
             }))
           }}
           value={character?.race}
+          className={`${inputStyle} ${
+            emptyFields?.includes('race') && 'border-red-500 border-2'
+          }`}
         >
           <option value='' disabled hidden>
             Select a race
@@ -211,7 +235,10 @@ export default function CharacterForm({ title }: Props) {
             </option>
           ))}
         </select>
-        <label htmlFor='background'>Background</label>
+        <label htmlFor='background'>
+          Background
+          <span className='text-red-500'>*</span>
+        </label>
         <select
           name='background'
           id='background'
@@ -223,6 +250,9 @@ export default function CharacterForm({ title }: Props) {
             }))
           }}
           value={character?.background}
+          className={`${inputStyle} ${
+            emptyFields?.includes('background') && 'border-red-500 border-2'
+          }`}
         >
           <option value='' disabled hidden>
             Select a background
@@ -233,7 +263,10 @@ export default function CharacterForm({ title }: Props) {
             </option>
           ))}
         </select>
-        <label htmlFor='alignment'>Alignment</label>
+        <label htmlFor='alignment'>
+          Alignment
+          <span className='text-red-500'>*</span>
+        </label>
         <select
           name='alignment'
           onChange={(e) => {
@@ -243,6 +276,9 @@ export default function CharacterForm({ title }: Props) {
             }))
           }}
           value={character?.alignment}
+          className={`${inputStyle} ${
+            emptyFields?.includes('alignment') && 'border-red-500 border-2'
+          }`}
         >
           <option value='' disabled hidden>
             Select an alignment
@@ -258,37 +294,27 @@ export default function CharacterForm({ title }: Props) {
           <option value='chaotic-evil'>chaotic-evil</option>
           <option value='unknown'>unknown</option>
         </select>
-        <button
+        <input
           type='submit'
           className='
-          bg-emerald-600 
-          text-white 
-          w-[fit-content] 
-          px-4
-          py-1 
-          rounded-md
+            bg-emerald-600 
+            text-white 
+            w-[fit-content] 
+            px-4
+            py-1 
+            my-3
+            rounded-md
 
-          transition 
-          ease-in-out 
-          duration-300 
-          hover:bg-emerald-800 
-          hover:shadow-lg
-          hover:transition 
-          hover:ease-in 
-          hover:duration-100'
-        >
-          Add Character
-        </button>
-        {!!emptyFields.length && (
-          <p className='break-words' style={{ wordWrap: 'break-word' }}>
-            The following fields are required:
-            {emptyFields.map((field) => (
-              <p key={field} className='text-red-500'>
-                {field}
-              </p>
-            ))}
-          </p>
-        )}
+            transition 
+            ease-in-out 
+            duration-300 
+            hover:bg-emerald-800 
+            hover:shadow-lg
+            hover:transition 
+            hover:ease-in 
+            hover:duration-100'
+          value='Add Character'
+        />
       </form>
     </div>
   )

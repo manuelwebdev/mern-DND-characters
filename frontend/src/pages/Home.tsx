@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import CharacterDetails from '../components/CharacterDetails'
 import CharacterForm from '../components/CharacterForm'
 import { useCharactersContext } from '../hooks/useCharacterContext'
+import { UilTimes } from '@iconscout/react-unicons'
 
 type Props = {}
 
@@ -32,6 +33,22 @@ export default function Home({}: Props) {
   return (
     <div className='home'>
       <h2 className='text-bold text-2xl leading-[3rem]'>Characters</h2>
+      <dialog
+        open
+        className='
+          position-absolute 
+          right-0 
+          top-[calc(50%-250px)] 
+          w-[400px] 
+          h-[500px] 
+          backdrop:bg-gray-500
+          bg-slate-400'
+      >
+        <button>
+          <UilTimes size='20' color='#4d4d4d' />
+        </button>
+        <p>This modal dialog has a groovy backdrop!</p>
+      </dialog>
       <div className='grid grid-cols-repeater md:grid-cols-[3fr_minmax(min-content,400px)] gap-4'>
         <div className='grid grid-cols-repeater gap-2'>
           {characters?.map((character: any) => (
