@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import CharacterDetails from '../components/CharacterDetails'
 import CharacterForm from '../components/CharacterForm'
 import { useCharactersContext } from '../hooks/useCharacterContext'
@@ -9,6 +9,7 @@ type Props = {}
 export default function Home({}: Props) {
   // const [characters, setCharacters] = useState<null | unknown[]>(null)
   const { characters, dispatch } = useCharactersContext()
+  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false)
 
   useEffect(() => {
     ;(async () => {
@@ -35,19 +36,67 @@ export default function Home({}: Props) {
       <h2 className='text-bold text-2xl leading-[3rem]'>Characters</h2>
       <dialog
         open
+        id='modal'
         className='
           position-absolute 
           right-0 
           top-[calc(50%-250px)] 
           w-[400px] 
           h-[500px] 
+          rounded
+          p-4
           backdrop:bg-gray-500
           bg-slate-400'
       >
-        <button>
+        <button className='absolute right-0 top-0'>
           <UilTimes size='20' color='#4d4d4d' />
         </button>
-        <p>This modal dialog has a groovy backdrop!</p>
+        <h2>Update Character</h2>
+        <form onSubmit={(e) => e.preventDefault()} method='post'>
+          <input
+            type='text'
+            name='name'
+            placeholder='Name'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='text'
+            name='class'
+            placeholder='Class'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='number'
+            name='level'
+            placeholder='Level'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='text'
+            name='race'
+            placeholder='Race'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='text'
+            name='background'
+            placeholder='Background'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='text'
+            name='alignment'
+            placeholder='Alignment'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <input
+            type='date'
+            name='createdAt'
+            placeholder='Created At'
+            className='w-full h-[2.5rem] rounded p-2 mb-2'
+          />
+          <button type='submit'>Submit</button>
+        </form>
       </dialog>
       <div className='grid grid-cols-repeater md:grid-cols-[3fr_minmax(min-content,400px)] gap-4'>
         <div className='grid grid-cols-repeater gap-2'>
