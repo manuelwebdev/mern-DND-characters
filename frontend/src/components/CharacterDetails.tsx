@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useCharactersContext } from '../hooks/useCharacterContext'
-import { UilTrash } from '@iconscout/react-unicons'
+import { UilTrash, UilEdit } from '@iconscout/react-unicons'
 
 type Props = {
   character: any
+  setUpdateDialog: any
 }
 
 export default function CharacterDetails(props: Props) {
@@ -18,6 +19,7 @@ export default function CharacterDetails(props: Props) {
       alignment = null,
       createdAt = new Date(),
     },
+    setUpdateDialog,
   } = props
   const { dispatch } = useCharactersContext()
 
@@ -96,6 +98,28 @@ export default function CharacterDetails(props: Props) {
       >
         Delete
         <UilTrash size='20' color='#ffffff' />
+      </button>
+      <button
+        className='
+          container 
+          flex 
+          items-center 
+          col-span-1 
+          justify-self-end 
+          bg-slate-500 
+          h-[fit-content] 
+          w-[fit-content] 
+          rounded 
+          p-1
+          text-white
+          duration-300
+          hover:bg-slate-600
+          hover:transition-all
+          hover:duration-300'
+        onClick={() => setUpdateDialog(true)}
+      >
+        Update
+        <UilEdit size='20' color='#ffffff' />
       </button>
     </div>
   )

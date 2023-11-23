@@ -35,7 +35,7 @@ export default function Home({}: Props) {
     <div className='home'>
       <h2 className='text-bold text-2xl leading-[3rem]'>Characters</h2>
       <dialog
-        open
+        open={openUpdateDialog}
         id='modal'
         className='
           position-absolute 
@@ -48,7 +48,10 @@ export default function Home({}: Props) {
           backdrop:bg-gray-500
           bg-slate-400'
       >
-        <button className='absolute right-0 top-0'>
+        <button
+          className='absolute right-0 top-0'
+          onClick={() => setOpenUpdateDialog(false)}
+        >
           <UilTimes size='20' color='#4d4d4d' />
         </button>
         <h2>Update Character</h2>
@@ -101,7 +104,11 @@ export default function Home({}: Props) {
       <div className='grid grid-cols-repeater md:grid-cols-[3fr_minmax(min-content,400px)] gap-4'>
         <div className='grid grid-cols-repeater gap-2'>
           {characters?.map((character: any) => (
-            <CharacterDetails key={character?._id} character={character} />
+            <CharacterDetails
+              key={character?._id}
+              character={character}
+              setUpdateDialog={setOpenUpdateDialog}
+            />
           ))}
         </div>
         <CharacterForm title='Create New Character' />
