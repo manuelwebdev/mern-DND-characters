@@ -5,6 +5,7 @@ import { UilTrash, UilEdit } from '@iconscout/react-unicons'
 type Props = {
   character: any
   setUpdateDialog: any
+  setSelectedCharacter: any
 }
 
 export default function CharacterDetails(props: Props) {
@@ -20,6 +21,7 @@ export default function CharacterDetails(props: Props) {
       createdAt = new Date(),
     },
     setUpdateDialog,
+    setSelectedCharacter,
   } = props
   const { dispatch } = useCharactersContext()
 
@@ -40,6 +42,20 @@ export default function CharacterDetails(props: Props) {
       console.warn(error)
     }
   }
+
+  const handleUpdate = () => {
+    setUpdateDialog(true)
+    setSelectedCharacter({
+      name,
+      class: characterClass,
+      level,
+      race,
+      background,
+      alignment,
+      createdAt,
+    })
+  }
+
   return (
     <div
       className='
@@ -116,7 +132,7 @@ export default function CharacterDetails(props: Props) {
           hover:bg-slate-600
           hover:transition-all
           hover:duration-300'
-        onClick={() => setUpdateDialog(true)}
+        onClick={() => handleUpdate()}
       >
         Update
         <UilEdit size='20' color='#ffffff' />
