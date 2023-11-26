@@ -4,9 +4,14 @@ import { useCharactersContext } from '../hooks/useCharacterContext'
 type Props = {
   title: string
   character: Character
+  setOpenUpdateDialog?: any
 }
 
-export default function CharacterForm({ title, character }: Props) {
+export default function CharacterUpdateForm({
+  title,
+  character,
+  setOpenUpdateDialog,
+}: Props) {
   const { dispatch } = useCharactersContext()
   const [updatedCharacter, setUpdatedCharacter] = useState<Character>({
     ...character,
@@ -16,7 +21,6 @@ export default function CharacterForm({ title, character }: Props) {
   const [raceOptions, setRaceOptions] = useState([])
   const [backgroundOptions, setBackgroundOptions] = useState([])
   const [emptyFields, setEmptyFields] = useState<string[]>([])
-  console.log({ character })
 
   useEffect(() => {
     ;(async () => {
@@ -76,7 +80,7 @@ export default function CharacterForm({ title, character }: Props) {
           },
         }
       )
-      console.log(res)
+      console.log(res.json())
       if (!res.ok) {
         const err = await res.json()
         console.log(err)
@@ -95,6 +99,8 @@ export default function CharacterForm({ title, character }: Props) {
     } catch (error) {
       console.warn(error)
       setError(error)
+    } finally {
+      setOpenUpdateDialog(false)
     }
   }
 

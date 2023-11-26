@@ -94,50 +94,52 @@ export default function CharacterDetails(props: Props) {
           Created at: {new Date(createdAt).toDateString()}
         </p>
       </div>
-      <button
-        className='
-          container 
-          flex 
-          items-center 
-          col-span-1 
-          justify-self-end 
-          bg-slate-500 
-          h-[fit-content] 
-          w-[fit-content] 
-          rounded 
-          p-1
-          text-white
-          duration-300
-          hover:bg-slate-600
-          hover:transition-all
-          hover:duration-300'
-        onClick={handleDelete}
-      >
-        Delete
-        <UilTrash size='20' color='#ffffff' />
-      </button>
-      <button
-        className='
-          container 
-          flex 
-          items-center 
-          col-span-1 
-          justify-self-end 
-          bg-slate-500 
-          h-[fit-content] 
-          w-[fit-content] 
-          rounded 
-          p-1
-          text-white
-          duration-300
-          hover:bg-slate-600
-          hover:transition-all
-          hover:duration-300'
-        onClick={() => handleUpdate()}
-      >
-        Update
-        <UilEdit size='20' color='#ffffff' />
-      </button>
+      <div className='flex flex-col gap-2'>
+        <button
+          className='
+        container 
+        flex 
+        items-center 
+        col-span-1 
+        justify-self-end 
+        bg-slate-500 
+        h-[fit-content] 
+        w-[fit-content] 
+        rounded 
+        p-1
+        text-white
+        duration-300
+        hover:bg-slate-600
+        hover:transition-all
+        hover:duration-300'
+          onClick={handleDelete}
+        >
+          Delete
+          <UilTrash size='20' color='#ffffff' />
+        </button>
+        <button
+          className='
+        container 
+        flex 
+        items-center 
+        col-span-1 
+        justify-self-end 
+        bg-slate-500 
+        h-[fit-content] 
+        w-[fit-content] 
+        rounded 
+        p-1
+        text-white
+        duration-300
+        hover:bg-slate-600
+        hover:transition-all
+        hover:duration-300'
+          onClick={() => handleUpdate()}
+        >
+          Update
+          <UilEdit size='20' color='#ffffff' />
+        </button>
+      </div>
     </div>
   )
 }

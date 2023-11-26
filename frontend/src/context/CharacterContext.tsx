@@ -20,6 +20,7 @@ export const charactersReducer = (state: any, action: any) => {
         characters: removedCharacterList,
       }
     case 'UPDATE_CHARACTER':
+      console.log({ state, action })
       const updatedCharacterList = state?.characters?.map((character: any) => {
         if (character?._id === action?.payload?._id) {
           return action?.payload

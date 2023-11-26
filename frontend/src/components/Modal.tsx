@@ -12,7 +12,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   const handleOutsideClick = (event: any) => {
     event.stopPropagation()
-    console.log(event)
     if (
       dialogRef.current &&
       !dialogRef.current.contains(event.target as Node)

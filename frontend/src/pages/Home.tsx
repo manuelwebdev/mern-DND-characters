@@ -11,7 +11,7 @@ type Props = {}
 export default function Home({}: Props) {
   // const [characters, setCharacters] = useState<null | unknown[]>(null)
   const { characters, dispatch } = useCharactersContext()
-  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(true)
+  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false)
   const [selectedCharacter, setSelectedCharacter] = useState<Character>(
     {} as Character
   )
@@ -53,11 +53,11 @@ export default function Home({}: Props) {
         <CharacterUpdateForm
           title='Update Character'
           character={selectedCharacter}
+          setOpenUpdateDialog={setOpenUpdateDialog}
         />
       </Modal>
       <div className='grid grid-cols-repeater md:grid-cols-[3fr_minmax(min-content,400px)] gap-4'>
         <div className='grid grid-cols-repeater gap-2'>
-          {console.log(characters)}
           {characters?.map((character: Character) => (
             <CharacterDetails
               key={character?._id}
