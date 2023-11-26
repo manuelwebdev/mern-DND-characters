@@ -11,7 +11,7 @@ type Props = {
 export default function CharacterDetails(props: Props) {
   const {
     character: {
-      _id: id,
+      _id,
       name,
       class: characterClass,
       level = 0,
@@ -28,7 +28,7 @@ export default function CharacterDetails(props: Props) {
   const handleDelete = async (e: any) => {
     e.preventDefault()
     try {
-      const res = await fetch(`http://localhost:3000/api/characters/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/characters/${_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -46,6 +46,7 @@ export default function CharacterDetails(props: Props) {
   const handleUpdate = () => {
     setUpdateDialog(true)
     setSelectedCharacter({
+      _id,
       name,
       class: characterClass,
       level,
@@ -73,7 +74,7 @@ export default function CharacterDetails(props: Props) {
         '
     >
       <div className='flex flex-col col-span-2'>
-        <Link to={`/character/${id}`}>
+        <Link to={`/character/${_id}`}>
           <h2
             className='
           hover:underline

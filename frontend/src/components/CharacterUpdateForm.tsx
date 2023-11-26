@@ -65,9 +65,9 @@ export default function CharacterForm({ title, character }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault()
-      console.log(character)
+      console.log(character, updatedCharacter)
       const res = await fetch(
-        `http://localhost:3000/api/characters/${character._id}`,
+        `http://localhost:3000/api/characters/${character?._id}`,
         {
           method: 'PATCH',
           body: JSON.stringify(updatedCharacter),
@@ -76,6 +76,7 @@ export default function CharacterForm({ title, character }: Props) {
           },
         }
       )
+      console.log(res)
       if (!res.ok) {
         const err = await res.json()
         console.log(err)
@@ -84,6 +85,7 @@ export default function CharacterForm({ title, character }: Props) {
       }
       if (res.ok) {
         const data = await res.json()
+        console.log({ data })
         setError(null)
         dispatch({
           type: 'UPDATE_CHARACTER',
