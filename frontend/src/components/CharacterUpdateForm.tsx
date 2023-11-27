@@ -80,7 +80,6 @@ export default function CharacterUpdateForm({
           },
         }
       )
-      console.log(res.json())
       if (!res.ok) {
         const err = await res.json()
         console.log(err)
@@ -91,7 +90,7 @@ export default function CharacterUpdateForm({
         const data = await res.json()
         console.log({ data })
         setError(null)
-        dispatch({
+        await dispatch({
           type: 'UPDATE_CHARACTER',
           payload: data,
         })
