@@ -10,7 +10,7 @@ const app = express()
 // Middleware
 app.use(express.json())
 app.use((req, res, next) => {
-  console.log(req?.path, req?.method)
+  // console.log(req?.path, req?.method)
   next()
 })
 app.use((req, res, next) => {
@@ -29,7 +29,7 @@ mongoose
   .then(() => {
     // listen on port 3000
     app.listen(process.env.PORT || 3000, () => {
-      console.log('Connect to DB')
+      console.log('Connected to DB')
       console.log('Listening on port 3000')
     })
   })

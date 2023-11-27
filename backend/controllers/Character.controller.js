@@ -105,7 +105,6 @@ async function deleteCharacter(req, res) {
 // UPDATE dnd character
 async function updateCharacter(req, res) {
   try {
-    console.log('body', req.body)
     const { id } = req.params
     const { name, class: _class, level, race, background, alignment } = req.body
 
