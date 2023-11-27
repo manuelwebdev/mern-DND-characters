@@ -1,12 +1,10 @@
 # mern-DND-characters
 
-# Backend/
+### Frontend/
 
-# Frontend/
+### Backend/
 
-# express-dnd-characters
-
-## API routes
+# API routes
 
 `/api/characters`
 

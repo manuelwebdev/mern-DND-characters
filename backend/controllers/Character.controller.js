@@ -130,7 +130,6 @@ async function updateCharacter(req, res) {
   }
 }
 
-// export functions
 export {
   getCharacters,
   getCharacter,
