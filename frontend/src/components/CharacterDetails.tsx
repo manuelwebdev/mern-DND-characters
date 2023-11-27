@@ -69,9 +69,8 @@ export default function CharacterDetails(props: Props) {
         bg-slate-100 
         min-w-fit 
         grid 
-        grid-cols-3 
-        gap-4         
-        '
+        grid-cols-3
+        gap-4'
     >
       <div className='flex flex-col col-span-2'>
         <Link to={`/character/${_id}`}>
@@ -94,7 +93,7 @@ export default function CharacterDetails(props: Props) {
           Created at: {new Date(createdAt).toDateString()}
         </p>
       </div>
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-2 items-end'>
         <button
           className='
         container 

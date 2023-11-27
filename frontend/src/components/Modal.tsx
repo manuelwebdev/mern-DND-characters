@@ -58,7 +58,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         >
           <div
             className='
-              w-3/4 
+              min-w-1/2 
+              w-full
+              max-w-[400px]
               bg-slate-300
               rounded-md
               flex 
@@ -78,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
             >
               <UilTimes />
             </button>
-            <div className='px-8 pb-8'>{children}</div>
+            <div className='px-8 pb-8 w-full'>{children}</div>
           </div>
         </dialog>
       )}
