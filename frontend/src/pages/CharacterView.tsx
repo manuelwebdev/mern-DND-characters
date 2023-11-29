@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ type Character = {
   createdAt: Date
 }
 
-export default function CharacterView() {
+const CharacterView: React.FC = () => {
   const [character, setCharacter] = useState<Character | null>(null)
   const { id } = useParams<{ id: string }>()
 
@@ -32,18 +33,35 @@ export default function CharacterView() {
   }, [id])
 
   if (!character) {
-    return <div>Loading...</div>
+    return <div className='text-center p-8 text-gray-700'>Loading...</div>
   }
 
   return (
-    <div>
-      <h1>{character.name}</h1>
-      <p>Class: {character.class}</p>
-      <p>Level: {character.level}</p>
-      <p>Race: {character.race}</p>
-      <p>Background: {character.background}</p>
-      <p>Alignment: {character.alignment}</p>
-      <p>Created At: {new Date(character.createdAt).toLocaleString()}</p>
+    <div className='max-w-md mx-auto p-6 bg-white rounded-md shadow-md'>
+      <h1 className='text-2xl font-semibold mb-4'>{character.name}</h1>
+      <div className='space-y-2'>
+        <p>
+          <strong>Class:</strong> {character.class}
+        </p>
+        <p>
+          <strong>Level:</strong> {character.level}
+        </p>
+        <p>
+          <strong>Race:</strong> {character.race}
+        </p>
+        <p>
+          <strong>Background:</strong> {character.background}
+        </p>
+        <p>
+          <strong>Alignment:</strong> {character.alignment}
+        </p>
+        <p>
+          <strong>Created At:</strong>{' '}
+          {new Date(character.createdAt).toLocaleString()}
+        </p>
+      </div>
     </div>
   )
 }
+
+export default CharacterView
