@@ -1,4 +1,4 @@
-import React, { useRef, ReactNode } from 'react'
+import React, { useRef, ReactNode, useEffect } from 'react'
 import { UilTimes } from '@iconscout/react-unicons'
 
 interface ModalProps {
@@ -10,62 +10,69 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
-  const handleOutsideClick = (event: any) => {
-    event.stopPropagation()
-    if (
-      dialogRef.current &&
-      !dialogRef.current.contains(event.target as Node)
-    ) {
-      onClose()
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        dialogRef.current &&
+        !dialogRef.current.contains(event.target as Node)
+      ) {
+        onClose()
+      }
     }
-  }
 
-  const handleEscapeKey = (event: any) => {
-    if (event.key === 'Escape') {
-      onClose()
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
     }
-  }
 
-  // Attach event listeners when the modal is open
-  if (isOpen) {
-    document.addEventListener('mousedown', handleOutsideClick)
-    document.addEventListener('keydown', handleEscapeKey)
-  }
+    // Attach event listeners when the modal is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('mousedown', handleOutsideClick)
+      document.addEventListener('keydown', handleEscapeKey)
+    }
 
-  // Remove event listeners when the modal is closed
-  const cleanupListeners = () => {
-    document.removeEventListener('mousedown', handleOutsideClick)
-    document.removeEventListener('keydown', handleEscapeKey)
-  }
+    // Remove event listeners and reset body overflow when the modal is closed
+    return () => {
+      document.body.style.overflow = 'auto'
+      document.removeEventListener('mousedown', handleOutsideClick)
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [isOpen, onClose])
 
   return (
     <>
       {isOpen && (
         <dialog
           ref={dialogRef}
-          open
           className='
-            h-screen 
-            w-screen
+            bg-slate-800
+            bg-opacity-50
+            m-0
+            pr-3
+            w-full
+            h-screen
             fixed 
             inset-0 
-            bg-black 
-            bg-opacity-50 
             flex 
-            items-center 
-            justify-center'
-          onClick={handleOutsideClick}
+            items-end 
+            justify-end'
+          onClick={() => {
+            onClose()
+          }}
         >
           <div
             className='
-              min-w-1/2 
+              min-w-2/3 
               w-full
               max-w-[400px]
               bg-slate-300
-              rounded-md
+              rounded-t-md
               flex 
               flex-col
               items-start'
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
