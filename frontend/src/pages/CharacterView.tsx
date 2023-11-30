@@ -38,24 +38,24 @@ const CharacterView: React.FC = () => {
 
   return (
     <div className='max-w-md mx-auto p-6 bg-white rounded-md shadow-md'>
-      <h1 className='text-2xl font-semibold mb-4'>{character.name}</h1>
+      <h1 className='text-3xl font-bold mb-4'>{character.name}</h1>
       <div className='space-y-2'>
-        <p>
+        <p className='text-sm'>
           <strong>Class:</strong> {character.class}
         </p>
-        <p>
+        <p className='text-sm'>
           <strong>Level:</strong> {character.level}
         </p>
-        <p>
+        <p className='text-sm'>
           <strong>Race:</strong> {character.race}
         </p>
-        <p>
+        <p className='text-sm'>
           <strong>Background:</strong> {character.background}
         </p>
-        <p>
+        <p className='text-sm'>
           <strong>Alignment:</strong> {character.alignment}
         </p>
-        <p>
+        <p className='text-sm'>
           <strong>Created At:</strong>{' '}
           {new Date(character.createdAt).toLocaleString()}
         </p>
